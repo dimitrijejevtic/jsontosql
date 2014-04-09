@@ -7,3 +7,10 @@ A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMN
 A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\Newtonsoft.Json.pdb
 A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\Newtonsoft.Json.xml
 A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\obj\Debug\DatabaseMNGMNT.csprojResolveAssemblyReference.cache
+C:\Users\Dimitrije\Documents\Visual Studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\DatabaseMNGMNT.exe.config
+C:\Users\Dimitrije\Documents\Visual Studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\obj\Debug\DatabaseMNGMNT.exe
+C:\Users\Dimitrije\Documents\Visual Studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\obj\Debug\DatabaseMNGMNT.pdb
+C:\Users\Dimitrije\Documents\Visual Studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\DatabaseMNGMNT.exe
+C:\Users\Dimitrije\Documents\Visual Studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\DatabaseMNGMNT.pdb
+C:\Users\Dimitrije\Documents\Visual Studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dimitrije\Documents\Visual Studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\obj\Debug\DatabaseMNGMNT.csprojResolveAssemblyReference.cache

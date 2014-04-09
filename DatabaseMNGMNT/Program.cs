@@ -29,7 +29,7 @@ namespace DatabaseMNGMNT
         {
 
             string connectionString;
-            string fileName = "localDB.sdf";
+            string fileName = "localDB.mdf";
             string password = "";
 
 
@@ -91,30 +91,56 @@ namespace DatabaseMNGMNT
 
             JObject o = JObject.Parse(json);
             int temp1 = 0;
+            
 
-            dynamic array = JsonConvert.DeserializeObject(json);
             foreach (var item in o["fakulteti"])
             {
-                SqlCeCommand cmd = cn.CreateCommand();
-                string fakultelMock = "INSERT INTO Fakulteti(identifier, Naziv, Telefon, Sajt,  Email, Adresa, Dekan, Text, Smerovi, Zvanja, Uslovi_upisa, Logo) VALUES (" 
-                    + temp1 + "," 
-                    + item["Naziv"].ToString() + ", " 
-                    + item["Telefon"].ToString() + ", " 
-                    + item["Sajt"].ToString() + ", " 
-                    + item["Email"].ToString() + ", " 
-                    + item["Adresa"].ToString() + ", " 
-                    + item["Dekan"].ToString() + ", " 
-                    + item["Tekst"].ToString() + ", " 
-                    + item["Smerovi"].ToString() + ", " 
-                    + item["Zvanja"].ToString() + ", " 
-                    + item["Uslovi_upisa"].ToString() + " );";
-                 Console.WriteLine("{0} {1}", item["Naziv"].ToString(), item["Adresa"]);
-                cmd.CommandText = fakultelMock;
-                cmd.ExecuteNonQuery();  //https://stackoverflow.com/questions/8389803/insert-data-into-database-in-c-sharp
-            }
-                foreach(var slika in o["domovi"]){
-
-                
+                int j = 0;
+                foreach (var slika in item["Images"])
+                {
+                    string commandMock = "";
+                    if (slika[0] != null || !slika[0].Equals(""))
+                        commandMock = slika[0].ToString() + "', '";
+                    if (slika[1] != null || !slika[1].Equals(""))
+                        commandMock=commandMock+ slika[1].ToString()+ "', '";
+                    if (slika[2] != null || !slika[2].Equals(""))
+                        commandMock = commandMock + slika[2].ToString() + "', '";
+                    if (slika[3] != null || !slika[3].Equals(""))
+                        commandMock = commandMock + slika[3].ToString() + "', '";
+                    if (slika[4] != null || !slika[4].Equals(""))
+                        commandMock = commandMock + slika[4].ToString();
+                    j++;
+                }
+              #region sql
+                try
+                {
+                    SqlCeCommand cmd = new SqlCeCommand("INSERT INTO Fakulteti (identifier, Naziv, Telefon, Sajt,  Email, Adresa, Dekan, Text, Smerovi, Zvanja, Uslovi_upisa, Logo) VALUES ('"
+                        + temp1 + "', '"
+                        + item["Naziv"].ToString() + "', '"
+                        + item["Telefon"].ToString() + "', '"
+                        + item["Sajt"].ToString() + "', '"
+                        + item["Email"].ToString() + "', '"
+                        + item["Adresa"].ToString() + "', '"
+                        + item["Dekan"].ToString() + "', '"
+                        + item["Tekst"].ToString() + "', '"
+                        + item["Smerovi"].ToString() + "', '"
+                        + item["Zvanja"].ToString() + "', '"
+                        + item["Uslovi_upisa"].ToString()  + "', '"
+                        + item["Logo"].ToString() + "' );",cn);
+                    Console.WriteLine("{0} {1}", item["Naziv"].ToString(), item["Adresa"]);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                #endregion
+                int j=0;
+              //  foreach (var slika in o["Slike"])
+                {
+                   
+             //   j++;
+                }
                 temp1++;
             }
 
