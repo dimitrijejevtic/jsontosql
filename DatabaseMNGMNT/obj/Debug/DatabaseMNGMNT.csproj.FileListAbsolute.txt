@@ -1,0 +1,9 @@
+a:\users\mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\DatabaseMNGMNT.exe.config
+A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\DatabaseMNGMNT.exe
+A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\DatabaseMNGMNT.pdb
+A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\obj\Debug\DatabaseMNGMNT.exe
+A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\obj\Debug\DatabaseMNGMNT.pdb
+A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\Newtonsoft.Json.dll
+A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\Newtonsoft.Json.pdb
+A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\bin\Debug\Newtonsoft.Json.xml
+A:\Users\Mita\documents\visual studio 2013\Projects\DatabaseMNGMNT\DatabaseMNGMNT\obj\Debug\DatabaseMNGMNT.csprojResolveAssemblyReference.cache
