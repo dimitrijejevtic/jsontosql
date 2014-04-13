@@ -10,9 +10,6 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-
-
-
 namespace DatabaseMNGMNT
 {
     class Program
@@ -24,14 +21,11 @@ namespace DatabaseMNGMNT
             createDB();
         }
 
-
         public void createDB()
         {
-
             string connectionString;
-            string fileName = "localDB.mdf";
+            string fileName = "localDB.sdf";
             string password = "";
-
 
             if (File.Exists(fileName))
             {
@@ -39,7 +33,6 @@ namespace DatabaseMNGMNT
             }
 
             connectionString = string.Format("Datasource=\"{0}\"; Password='{1}'", fileName, password);
-
             SqlCeEngine en = new SqlCeEngine(connectionString);
             en.CreateDatabase();
 
@@ -52,28 +45,23 @@ namespace DatabaseMNGMNT
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "CREATE TABLE Domovi( identifier int, Naziv ntext, Telefon ntext, Sajt ntext, Adresa ntext, Tekst ntext, Prevoz ntext)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "CREATE TABLE FakultetiSlike( Identifier int, slika1 ntext, slika2 ntext, slika3 ntext, slika4 ntext) ";
+                cmd.CommandText = "CREATE TABLE FakultetiSlike( Identifier int, slika1 ntext, slika2 ntext, slika3 ntext, slika4 ntext, slika5 ntext) ";
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "CREATE TABLE DomoviSlike( Identifier int, slika1 ntext, slika2 ntext, slika3 ntext, slika4 ntext, slika5 ntext) ";
                 cmd.ExecuteNonQuery();
             }
-            catch
+            catch(Exception e)
             {
-                Console.WriteLine("Bad bad");
+                Console.WriteLine(e.Message);
             }
-
-            openJSON();
-                   
+            openJSON();          
         }
-
-
         public async void openJSON()
         {
             string connectionString;
             string fileName = "localDB.sdf";
             string password = "";
             connectionString = string.Format("Datasource=\"{0}\"; Password='{1}'", fileName, password);
-
             SqlCeConnection cn = new SqlCeConnection(connectionString);
             cn.Open();
 
@@ -92,55 +80,81 @@ namespace DatabaseMNGMNT
             JObject o = JObject.Parse(json);
             int temp1 = 0;
             
-
             foreach (var item in o["fakulteti"])
             {
-                int j = 0;
-                foreach (var slika in item["Images"])
-                {
-                    string commandMock = "";
-                    if (slika[0] != null || !slika[0].Equals(""))
-                        commandMock = slika[0].ToString() + "', '";
-                    if (slika[1] != null || !slika[1].Equals(""))
-                        commandMock=commandMock+ slika[1].ToString()+ "', '";
-                    if (slika[2] != null || !slika[2].Equals(""))
-                        commandMock = commandMock + slika[2].ToString() + "', '";
-                    if (slika[3] != null || !slika[3].Equals(""))
-                        commandMock = commandMock + slika[3].ToString() + "', '";
-                    if (slika[4] != null || !slika[4].Equals(""))
-                        commandMock = commandMock + slika[4].ToString();
-                    j++;
-                }
-              #region sql
+                #region sql
                 try
                 {
-                    SqlCeCommand cmd = new SqlCeCommand("INSERT INTO Fakulteti (identifier, Naziv, Telefon, Sajt,  Email, Adresa, Dekan, Text, Smerovi, Zvanja, Uslovi_upisa, Logo) VALUES ('"
+                    string tempFakultetiString = "INSERT INTO Fakulteti (identifier, Naziv, Telefon, Sajt,  Email, Adresa, Dekan, Text, Smerovi, Zvanja, Uslovi_upisa, Logo) VALUES ('"
                         + temp1 + "', '"
-                        + item["Naziv"].ToString() + "', '"
-                        + item["Telefon"].ToString() + "', '"
-                        + item["Sajt"].ToString() + "', '"
-                        + item["Email"].ToString() + "', '"
-                        + item["Adresa"].ToString() + "', '"
-                        + item["Dekan"].ToString() + "', '"
-                        + item["Tekst"].ToString() + "', '"
-                        + item["Smerovi"].ToString() + "', '"
-                        + item["Zvanja"].ToString() + "', '"
-                        + item["Uslovi_upisa"].ToString()  + "', '"
-                        + item["Logo"].ToString() + "' );",cn);
+                        + item["Naziv"] + "', '"
+                        + item["Telefon"] + "', '"
+                        + item["Sajt"] + "', '"
+                        + item["Email"] + "', '"
+                        + item["Adresa"] + "', '"
+                        + item["Dekan"] + "', '"
+                        + item["Tekst"] + "', '"
+                        + item["Smerovi"] + "', '"
+                        + item["Zvanja"] + "', '"
+                        + item["Uslovi_upisa"]  + "', '"
+                        + item["Logo"] + "' );";
+                    Console.WriteLine(tempFakultetiString);
+                    SqlCeCommand cmd2 = new SqlCeCommand(tempFakultetiString,cn);
                     Console.WriteLine("{0} {1}", item["Naziv"].ToString(), item["Adresa"]);
+                    cmd2.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                int j = 0;
+                string commandMock = "INSERT INTO FakultetiSlike( Identifier, slika1, slika2, slika3, slika4, slika5) VALUES ('" + temp1 + "', '";
+
+                foreach (var slika in item["Images"])
+                {
+                    if (slika.ToString() != null || !slika.Equals(""))
+                        commandMock = commandMock + slika.ToString() + "', '";
+                    else
+                        commandMock = commandMock + "'' " + "', '";
+                    j++;
+                }
+                commandMock = commandMock.Substring(0, commandMock.Length - 3);
+                switch (j)
+                {
+                    case 1:{
+                            commandMock = commandMock + ", '', '', '', ''";
+                            break;
+                        }
+                    case 2:{
+                            commandMock = commandMock + ", '', '', ''";
+                            break;
+                        }
+                    case 3:{
+                            commandMock = commandMock + ", '', ''";
+                            break;
+                        }
+                    case 4:{
+                            commandMock = commandMock + ", ''";
+                            break;
+                        }
+                    case 5:{
+                            commandMock = commandMock + "'";
+                            break;
+                        }
+                }
+                commandMock = commandMock + " );";
+                Console.WriteLine(commandMock);
+                try
+                {
+                    SqlCeCommand cmd = new SqlCeCommand(commandMock, cn);
                     cmd.ExecuteNonQuery();
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
+               
                 #endregion
-                int j=0;
-              //  foreach (var slika in o["Slike"])
-                {
-                   
-             //   j++;
-                }
                 temp1++;
             }
 
@@ -148,7 +162,79 @@ namespace DatabaseMNGMNT
 
             foreach (var domValue in o["domovi"])
             {
-               
+                #region sql
+                try
+                {
+                    string tempDomoviString = "INSERT INTO Domovi (identifier, Naziv, Telefon, Sajt, Adresa, Tekst, Prevoz) VALUES ('"
+                        + temp2 + "', '"
+                        + domValue["Naziv"] + "', '"
+                        + domValue["Telefon"] + "', '"
+                        + domValue["Sajt"] + "', '"
+                        + domValue["Adresa"] + "', '"
+                        + domValue["Opis"] + "', '"
+                        + domValue["Prevoz"]+  "' );";
+                    Console.WriteLine(tempDomoviString);
+                    SqlCeCommand cmd2 = new SqlCeCommand(tempDomoviString, cn);
+                    Console.WriteLine("{0} {1}", domValue["Naziv"].ToString(), domValue["Adresa"]);
+                    cmd2.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                int j = 0;
+                string commandMock = "INSERT INTO DomoviSlike( Identifier, slika1, slika2, slika3, slika4, slika5) VALUES ('" + temp2 + "', '";
+
+                foreach (var slika in domValue["Images"])
+                {
+                    if (slika.ToString() != null || !slika.Equals(""))
+                        commandMock = commandMock + slika.ToString() + "', '";
+                    else
+                        commandMock = commandMock + "'' " + "', '";
+                    j++;
+                }
+                commandMock = commandMock.Substring(0, commandMock.Length - 3);
+                switch (j)
+                {
+                    case 1:
+                        {
+                            commandMock = commandMock + ", '', '', '', ''";
+                            break;
+                        }
+                    case 2:
+                        {
+                            commandMock = commandMock + ", '', '', ''";
+                            break;
+                        }
+                    case 3:
+                        {
+                            commandMock = commandMock + ", '', ''";
+                            break;
+                        }
+                    case 4:
+                        {
+                            commandMock = commandMock + ", ''";
+                            break;
+                        }
+                    case 5:
+                        {
+                            commandMock = commandMock + "'";
+                            break;
+                        }
+                }
+                commandMock = commandMock + " );";
+                Console.WriteLine(commandMock);
+                try
+                {
+                    SqlCeCommand cmd = new SqlCeCommand(commandMock, cn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+                #endregion
                 temp2++;
             }
             cn.Close();
@@ -162,9 +248,6 @@ namespace DatabaseMNGMNT
                 Console.ReadKey();
             }
         }
-
-       
-
     }
 
 
